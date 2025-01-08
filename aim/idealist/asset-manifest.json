@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/aim/idealist/static/css/main.25823713.css",
-    "main.js": "/aim/idealist/static/js/main.3cb56d90.js",
+    "main.js": "/aim/idealist/static/js/main.7bdb6b8b.js",
     "index.html": "/aim/idealist/index.html",
     "main.25823713.css.map": "/aim/idealist/static/css/main.25823713.css.map",
-    "main.3cb56d90.js.map": "/aim/idealist/static/js/main.3cb56d90.js.map"
+    "main.7bdb6b8b.js.map": "/aim/idealist/static/js/main.7bdb6b8b.js.map"
   },
   "entrypoints": [
     "static/css/main.25823713.css",
-    "static/js/main.3cb56d90.js"
+    "static/js/main.7bdb6b8b.js"
   ]
 }
