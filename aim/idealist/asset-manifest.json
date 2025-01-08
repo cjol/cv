@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/aim/idealist/static/css/main.09ecbf0e.css",
+    "main.js": "/aim/idealist/static/js/main.61109491.js",
+    "index.html": "/aim/idealist/index.html",
+    "main.09ecbf0e.css.map": "/aim/idealist/static/css/main.09ecbf0e.css.map",
+    "main.61109491.js.map": "/aim/idealist/static/js/main.61109491.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.09ecbf0e.css",
+    "static/js/main.61109491.js"
+  ]
+}
