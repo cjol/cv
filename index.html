@@ -82,7 +82,7 @@
       }
 
       .css-d9vn2l:hover {
-        opacity: 0.7;
+        color: #4a90b8;
       }
 
       .contact-item,
@@ -217,6 +217,12 @@
         margin: 0;
       }
 
+      @media print {
+        body {
+          background-color: #fff !important;
+        }
+      }
+
       .css-17f65f,
       .css-37nf1f {
         box-sizing: border-box;
@@ -301,6 +307,12 @@
         min-width: 100vw;
       }
 
+      @media print {
+        .css-be9d8r {
+          background-color: #fff !important;
+        }
+      }
+
       .box-title,
       .box-value {
         font-family: inter, sans-serif;
@@ -312,7 +324,7 @@
         margin: 0;
         min-width: 0;
         font-weight: 300;
-        color: #6d7a7e;
+        color: #4a5558;
         font-size: 16px;
       }
 
@@ -322,6 +334,7 @@
         font-size: 90%;
         line-height: 14px;
         display: block;
+        color: #4a90b8;
       }
 
       .box-title {
@@ -360,13 +373,13 @@
         font-family: inter, sans-serif;
         line-height: 1.6;
         font-weight: 300;
-        color: #6d7a7e;
+        color: #4a5558;
         font-size: 18px;
         margin: 0 0 8px;
       }
 
       .dates-container {
-        color: #b6bbbc;
+        color: #4a5558;
         display: block;
         margin: 0 0 10px;
       }
@@ -389,7 +402,7 @@
 
       .title-link:hover,
       .download-link:hover {
-        opacity: 0.7;
+        color: #4a90b8;
       }
 
       .download-link {
@@ -418,7 +431,7 @@
         margin: 0;
         line-height: 24px;
         font-weight: 300;
-        color: #b6bbbc;
+        color: #4a5558;
         -webkit-flex-shrink: 0;
         -ms-flex-negative: 0;
         flex-shrink: 0;
@@ -504,7 +517,7 @@
         line-height: 1.4;
         font-family: inter, sans-serif;
         font-weight: 600;
-        color: #b6bbbc;
+        color: #000000;
         -webkit-box-flex: 0;
         -webkit-flex-grow: 0;
         -ms-flex-positive: 0;
@@ -552,6 +565,12 @@
       }
 
       /* // It's advised to print at 70% scale */
+      @media print {
+        body {
+          zoom: 0.7;
+        }
+      }
+
       @page {
         margin-top: 3cm;
       }
@@ -577,8 +596,18 @@
                 <div class="contact-section">
                   <div class="contact-items">
                     <div class="contact-item">London, UK</div>
-                    <div class="contact-item">christopher@littlesavage.net</div>
-                    <div class="contact-item">+44 7584 248 916</div>
+                    <div class="contact-item">
+                      <a
+                        href="mailto:christopher@littlesavage.net"
+                        class="title-link"
+                        >christopher@littlesavage.net</a
+                      >
+                    </div>
+                    <div class="contact-item">
+                      <a href="tel:+447584248916" class="title-link"
+                        >+44 7584 248 916</a
+                      >
+                    </div>
                     <div class="contact-item">
                       <a
                         href="https://www.cjols.dev"
@@ -613,17 +642,18 @@
                   <section class="section-grid">
                     <h2 class="section-title">Skills</h2>
                     <ul class="tag-holder">
-                      <li class="tag">Team Leadership</li>
-                      <!-- <li class="tag">Software Lifecycle</li> -->
-                      <li class="tag">Technical Strategy</li>
-                      <li class="tag">Communication</li>
-                      <li class="tag">Obstacle Removal</li>
-
-                      <li class="tag">Artificial Intelligence</li>
+                      <!-- <li class="tag">Artificial Intelligence</li> -->
+                      <li class="tag">AI Engineering</li>
                       <li class="tag">AWS</li>
                       <li class="tag">Python</li>
                       <li class="tag">TypeScript</li>
                       <li class="tag">Developer Tooling</li>
+                      <li class="tag">DevOps</li>
+                      <li class="tag">Communication</li>
+                      <li class="tag">Team Leadership</li>
+                      <!-- <li class="tag">Software Lifecycle</li> -->
+                      <li class="tag">Technical Strategy</li>
+                      <!-- <li class="tag">Obstacle Removal</li> -->
                     </ul>
                   </section>
                   <section class="section">
