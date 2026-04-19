@@ -50,8 +50,6 @@ export class RepoChatAgent extends Think<Env, RepoConfig> {
     ].join("\n");
   }
 
-  // @ts-expect-error — @callable() uses stage-2 decorator conventions that TypeScript
-  // strict mode flags; this is intentional and works correctly at runtime via Wrangler.
   @callable()
   async setup(gitUrl: string, repoName: string): Promise<{ ok: boolean; error?: string }> {
     const existing = this.getConfig();

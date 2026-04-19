@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useAgent } from "agents/react";
 import { useAgentChat } from "@cloudflare/ai-chat/react";
 import type { UIMessage } from "ai";
+import type { RepoChatAgent } from "./agent";
 import "./styles.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -105,9 +106,7 @@ function ChatScreen({ repo }: { repo: Extract<ImportState, { status: "ready" }> 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const setupCalledRef = useRef(false);
 
-  // useAgent is typed with the instance type for state inference; callable methods
-  // are accessed via `agent.call` at runtime (we use @ts-expect-error below).
-  const agent = useAgent({
+  const agent = useAgent<RepoChatAgent, unknown>({
     agent: "RepoChatAgent",
     name: repo.artifactId,
   });
@@ -120,9 +119,8 @@ function ChatScreen({ repo }: { repo: Extract<ImportState, { status: "ready" }> 
     setupCalledRef.current = true;
     setCloneState("cloning");
 
-    // @ts-expect-error — callable methods are typed via Agent generic but TS needs the cast
-    agent.setup(repo.gitUrl, repo.repoName)
-      .then((result: { ok: boolean; error?: string }) => {
+    agent.stub.setup(repo.gitUrl, repo.repoName)
+      .then((result) => {
         if (result.ok) {
           setCloneState("done");
         } else {
@@ -204,15 +202,14 @@ function ChatScreen({ repo }: { repo: Extract<ImportState, { status: "ready" }> 
         {messages.map((msg: UIMessage) => (
           <div key={msg.id} className={`message ${msg.role}`}>
             <div className="message-bubble">
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {(msg.parts as any[]).map((part: any, i: number) => {
+              {msg.parts.map((part, i) => {
                 if (part.type === "text") {
                   return <span key={i}>{part.text}</span>;
                 }
-                if (part.type === "tool-invocation") {
+                if (part.type === "dynamic-tool") {
                   return (
                     <div key={i} className="tool-call">
-                      {part.toolInvocation.toolName}({JSON.stringify(part.toolInvocation.args).slice(0, 80)}…)
+                      {part.toolName}(…)
                     </div>
                   );
                 }
