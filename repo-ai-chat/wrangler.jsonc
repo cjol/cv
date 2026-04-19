@@ -5,12 +5,17 @@
   "compatibility_date": "2026-01-28",
   "compatibility_flags": ["nodejs_compat", "experimental"],
 
-  // Anthropic API key — set via: wrangler secret put ANTHROPIC_API_KEY
-  // (or add to .dev.vars for local development)
+  // Workers AI binding — no API key needed, billed to your CF account.
+  // Model: @cf/moonshotai/kimi-k2.5 (256k ctx, tool calling, vision)
+  "ai": { "binding": "AI" },
 
-  // Cloudflare Artifacts (private beta) - uncomment when you have access
+  // Cloudflare Artifacts — Git-compatible versioned storage (private beta).
   // See: https://developers.cloudflare.com/artifacts/get-started/workers/
-  // "artifacts": { "binding": "ARTIFACTS" },
+  "artifacts": { "binding": "ARTIFACTS" },
+
+  // Optional: route AI calls through an AI Gateway for caching + observability.
+  // Create a gateway at dash.cloudflare.com, then set AI_GATEWAY_ID here.
+  // "vars": { "AI_GATEWAY_ID": "my-gateway-id" },
 
   "assets": {
     "directory": "./dist",

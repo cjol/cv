@@ -10,7 +10,7 @@ interface Env {
   ARTIFACTS?: {
     fork(opts: { remote: string; name: string }): Promise<{ id: string; url: string }>;
   };
-  ANTHROPIC_API_KEY: string;
+  AI: Ai;
   ASSETS: Fetcher;
 }
 

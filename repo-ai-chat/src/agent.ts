@@ -2,11 +2,13 @@ import { Think } from "@cloudflare/think";
 import { callable } from "agents";
 import { createGit } from "@cloudflare/shell/git";
 import { WorkspaceFileSystem } from "@cloudflare/shell";
-import { anthropic } from "@ai-sdk/anthropic";
+import { createWorkersAI } from "workers-ai-provider";
 
 interface Env {
-  ANTHROPIC_API_KEY: string;
+  AI: Ai;
   RepoChatAgent: DurableObjectNamespace;
+  // Optional: set AI_GATEWAY_ID in wrangler.jsonc vars to route via AI Gateway
+  AI_GATEWAY_ID?: string;
 }
 
 export interface RepoConfig {
@@ -17,7 +19,13 @@ export interface RepoConfig {
 
 export class RepoChatAgent extends Think<Env, RepoConfig> {
   getModel() {
-    return anthropic("claude-sonnet-4-5");
+    const gatewayId = this.env.AI_GATEWAY_ID;
+    const workersai = createWorkersAI({
+      binding: this.env.AI,
+      ...(gatewayId ? { gateway: { id: gatewayId } } : {}),
+    });
+    // kimi-k2.5: 256k ctx, multi-turn tool calling, vision — best Workers AI model for code Q&A
+    return workersai("@cf/moonshotai/kimi-k2.5");
   }
 
   getSystemPrompt() {
@@ -31,7 +39,7 @@ export class RepoChatAgent extends Think<Env, RepoConfig> {
     }
     return [
       `You are an expert software engineer helping users understand the **${config.repoName}** repository.`,
-      "The repository has been cloned into your workspace. Use your built-in workspace tools to explore the code.",
+      "The repository has been cloned into your workspace at /repo. Use your built-in workspace tools to explore the code.",
       "",
       "When answering questions:",
       "- Use `read_file` to read specific files, starting with /repo/README.md for overviews",
