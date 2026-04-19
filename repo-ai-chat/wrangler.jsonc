@@ -9,10 +9,6 @@
   // Model: @cf/moonshotai/kimi-k2.5 (256k ctx, tool calling, vision)
   "ai": { "binding": "AI" },
 
-  // Cloudflare Artifacts — Git-compatible versioned storage (private beta).
-  // See: https://developers.cloudflare.com/artifacts/get-started/workers/
-  "artifacts": { "binding": "ARTIFACTS" },
-
   // Optional: route AI calls through an AI Gateway for caching + observability.
   // Create a gateway at dash.cloudflare.com, then set AI_GATEWAY_ID here.
   // "vars": { "AI_GATEWAY_ID": "my-gateway-id" },

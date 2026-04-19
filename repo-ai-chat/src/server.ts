@@ -5,11 +5,6 @@ export { RepoChatAgent };
 
 interface Env {
   RepoChatAgent: DurableObjectNamespace;
-  // Cloudflare Artifacts binding (private beta).
-  // Uncomment "artifacts" in wrangler.jsonc when you have access.
-  ARTIFACTS?: {
-    fork(opts: { remote: string; name: string }): Promise<{ id: string; url: string }>;
-  };
   AI: Ai;
   ASSETS: Fetcher;
 }
@@ -19,7 +14,7 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/import" && request.method === "POST") {
-      return handleImport(request, env);
+      return handleImport(request);
     }
 
     const agentResponse = await routeAgentRequest(request, env);
@@ -29,7 +24,7 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
-async function handleImport(request: Request, env: Env): Promise<Response> {
+async function handleImport(request: Request): Promise<Response> {
   let body: { repoUrl?: string };
   try {
     body = await request.json();
@@ -63,24 +58,7 @@ async function handleImport(request: Request, env: Env): Promise<Response> {
   // Normalise to HTTPS .git URL for cloning
   const gitUrl = `https://${parsedUrl.hostname}/${repoName}.git`;
 
-  // Attempt to fork into Cloudflare Artifacts for persistent caching.
-  // Falls back to direct GitHub URL if Artifacts is not configured.
-  if (env.ARTIFACTS) {
-    try {
-      const artifactName = repoName.replace("/", "-").toLowerCase().replace(/[^a-z0-9-]/g, "-");
-      const artifact = await env.ARTIFACTS.fork({ remote: gitUrl, name: artifactName });
-      return Response.json({
-        artifactId: artifact.id,
-        // artifact.url is a git-compatible URL — agents clone from here instead of GitHub
-        gitUrl: artifact.url,
-        repoName,
-      });
-    } catch (err) {
-      console.warn("Artifacts fork failed, falling back to direct GitHub URL:", err);
-    }
-  }
-
-  // Fallback: stable ID derived from the repo URL; agent clones directly from GitHub
+  // Stable ID derived from the repo URL — the agent clones directly from the host
   const artifactId = btoa(gitUrl).replace(/[^a-zA-Z0-9]/g, "").slice(0, 32);
   return Response.json({ artifactId, gitUrl, repoName });
 }
